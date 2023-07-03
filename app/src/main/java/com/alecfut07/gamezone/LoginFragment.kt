@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +24,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         val loginButton = view.findViewById<Button>(R.id.login_button)
         val emailEditText = view.findViewById<EditText>(R.id.email_edit_text)
