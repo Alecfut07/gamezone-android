@@ -13,16 +13,14 @@ class LoginRepository {
     private val retrofit: Retrofit
 
     init {
-        val BASE_URL = "http://10.0.2.2:5248/"
 
         val logging = HttpLoggingInterceptor()
-
         logging.level = HttpLoggingInterceptor.Level.BODY
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
 
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()
