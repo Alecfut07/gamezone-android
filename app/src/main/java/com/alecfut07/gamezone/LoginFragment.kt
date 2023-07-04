@@ -4,32 +4,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import com.alecfut07.gamezone.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val loginViewModel by viewModels<LoginViewModel>()
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val loginButton = view.findViewById<Button>(R.id.login_button)
-        val emailEditText = view.findViewById<EditText>(R.id.email_edit_text)
-        val passwordEditText = view.findViewById<EditText>(R.id.password_edit_text)
-        loginButton.setOnClickListener {
-            loginViewModel.login(emailEditText.text.toString(), passwordEditText.text.toString())
+        binding.loginButton.setOnClickListener {
+            loginViewModel.login(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
         }
     }
 }
