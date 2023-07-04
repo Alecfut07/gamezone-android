@@ -9,19 +9,23 @@ class LoginRepository(
 ) {
     fun login(email: String, password: String, callback: (String?) -> Unit) {
         val signInRequest = SignInRequest(email, password)
-        loginService.login(signInRequest).enqueue(object : Callback<Unit> {
+        val enqueueHandler = object : Callback<Unit> {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                val accessToken = response.headers().get("Authorization")
-                    ?.split(" ")
-                    ?.lastOrNull()
+                if (response.isSuccessful) {
+                    val accessToken = response.headers().get("Authorization")
+                        ?.split(" ")
+                        ?.lastOrNull()
 
-                callback(accessToken)
+                    callback(accessToken)
+                } else {
+                    callback(null)
+                }
             }
 
             override fun onFailure(call: Call<Unit>, t: Throwable) {
-                TODO("Not yet implemented")
+                callback(null)
             }
-
-        })
+        }
+        loginService.login(signInRequest).enqueue(enqueueHandler)
     }
 }
