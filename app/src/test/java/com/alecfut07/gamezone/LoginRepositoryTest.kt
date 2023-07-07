@@ -4,6 +4,7 @@ import okhttp3.Headers
 import okhttp3.ResponseBody
 import org.junit.Test
 import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
 import org.mockito.stubbing.Answer
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,9 +27,9 @@ class LoginRepositoryTest {
             val arg = it.getArgument<Callback<Unit>>(0)
             arg.onResponse(call, response)
         }
-        `when`(call.enqueue(any())).thenAnswer(answer)
+        whenever(call.enqueue(any())).thenAnswer(answer)
         val loginService = mock<LoginService>()
-        `when`(loginService.login(signInRequest)).thenReturn(call)
+        whenever(loginService.login(signInRequest)).thenReturn(call)
 
         val loginRepository = LoginRepository(loginService)
         val callback = mock<(String?) -> Unit>()
@@ -50,9 +51,9 @@ class LoginRepositoryTest {
             val arg = it.getArgument<Callback<Unit>>(0)
             arg.onResponse(call, response)
         }
-        `when`(call.enqueue(any())).thenAnswer(answer)
+        whenever(call.enqueue(any())).thenAnswer(answer)
         val loginService = mock<LoginService>()
-        `when`(loginService.login(signInRequest)).thenReturn(call)
+        whenever(loginService.login(signInRequest)).thenReturn(call)
 
         val loginRepository = LoginRepository(loginService)
         val callback = mock<(String?) -> Unit>()
@@ -72,9 +73,9 @@ class LoginRepositoryTest {
             val arg = it.getArgument<Callback<Unit>>(0)
             arg.onFailure(call, Throwable())
         }
-        `when`(call.enqueue(any())).thenAnswer(answer)
+        whenever(call.enqueue(any())).thenAnswer(answer)
         val loginService = mock<LoginService>()
-        `when`(loginService.login(signInRequest)).thenReturn(call)
+        whenever(loginService.login(signInRequest)).thenReturn(call)
 
         val loginRepository = LoginRepository(loginService)
         val callback = mock<(String?) -> Unit>()
