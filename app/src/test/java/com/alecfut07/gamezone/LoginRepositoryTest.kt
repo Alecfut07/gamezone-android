@@ -1,6 +1,7 @@
 package com.alecfut07.gamezone
 
 import okhttp3.Headers
+import okhttp3.Headers.Companion.toHeaders
 import okhttp3.ResponseBody
 import org.junit.Test
 import org.mockito.Mockito.*
@@ -20,7 +21,7 @@ class LoginRepositoryTest {
         val map = mapOf(
             "Authorization" to "Bearer $accessToken"
         )
-        val headers = Headers.of(map)
+        val headers = map.toHeaders()
         val response: Response<Unit> = Response.success(null, headers)
         val call = mock<Call<Unit>>()
         val answer = Answer {
